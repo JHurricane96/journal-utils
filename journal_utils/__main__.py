@@ -17,7 +17,9 @@ search_parser.add_argument("query")
 
 note_parser = subparsers.add_parser("note")
 note_subparsers = note_parser.add_subparsers(dest="note_command")
-note_subparsers.add_parser("add")
+new_note_subparser = note_subparsers.add_parser("new")
+new_note_subparser.add_argument("--force", "-f", action="store_true")
+new_note_subparser.add_argument("--date", "-d", help="Date of the note in YYYY/MM/DD format", default=None)
 
 
 def load_yaml(path: str):
@@ -31,13 +33,15 @@ def main():
     if args.command == "search":
         search(args, cfg)
     elif args.command == "note":
-        if args.note_command == "add":
-            note.add(args, cfg)
+        if args.note_command == "new":
+            note.new(args, cfg)
         else:
-            print("Wrong/No command provided.")
+            parser.print_help()
+            print("Error: wrong/no command provided.")
             sys.exit(1)
     else:
-        print("Wrong/No command provided.")
+        parser.print_help()
+        print("Error: wrong/no command provided.")
         sys.exit(1)
 
 
