@@ -1,1 +1,5 @@
 journal_path: journal_example
+location_type: ip
+keep:
+  username: username
+  token: token
