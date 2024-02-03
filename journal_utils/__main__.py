@@ -3,7 +3,7 @@ import sys
 
 import yaml
 
-from journal_utils import keep, note, search
+from journal_utils import keep, note, search, push
 
 parser = argparse.ArgumentParser()
 
@@ -30,6 +30,8 @@ download_subparser.add_argument("--overwrite", "-o", action="store_true")
 download_subparser.add_argument("-a", "--archive", action="store_true")
 archive_subparser = keep_subparsers.add_parser("archive")
 peek_subparser = keep_subparsers.add_parser("peek")
+
+push_parser = subparsers.add_parser("push")
 
 
 def load_yaml(path: str):
@@ -62,6 +64,8 @@ def main():
             keep.peek(args, cfg)
         else:
             error_and_exit()
+    elif args.command == "push":
+        push(args, cfg)
     else:
         error_and_exit()
 
